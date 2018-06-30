@@ -47,7 +47,7 @@ class MainController {
     }
 
     getCurrencies() {
-        return fetch('https://free.currencyconverterapi.com/api/v5/currencies')
+        return fetch('https://free.currencyconverterapi.com/api/v5/currencies',{mode:'cors'})
             .then(res => {
                 res.json()
                     .then(json => {
@@ -92,7 +92,7 @@ class MainController {
 
     fetchRates(inputCurr,outputCurr) {
         let str = `https://free.currencyconverterapi.com/api/v5/convert?q=${inputCurr}_${outputCurr}&compact=ultra`;
-        return fetch(str)
+        return fetch(str, { mode: 'cors' })
             .then(res => {
                 return res.json()
                     .then(json => {
