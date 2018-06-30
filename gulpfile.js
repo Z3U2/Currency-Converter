@@ -42,27 +42,27 @@ gulp.task('vendor', function() {
       '!./node_modules/bootstrap/dist/css/bootstrap-grid*',
       '!./node_modules/bootstrap/dist/css/bootstrap-reboot*'
     ])
-    .pipe(gulp.dest('./dist/vendor/bootstrap'))
+    .pipe(gulp.dest('./docs/vendor/bootstrap'))
 
   // jQuery
   gulp.src([
       './node_modules/jquery/dist/*',
       '!./node_modules/jquery/dist/core.js'
     ])
-    .pipe(gulp.dest('./dist/vendor/jquery'))
+    .pipe(gulp.dest('./docs/vendor/jquery'))
 
   gulp.src([
     './node_modules/idb/lib/idb.js'
   ])
-    .pipe(gulp.dest('./dist/vendor/idb'))
+    .pipe(gulp.dest('./docs/vendor/idb'))
     
 });
   
 // Compile SCSS
 gulp.task('css', function() {
-  return gulp.src('./dist/scss/**/*.scss')
+  return gulp.src('./docs/scss/**/*.scss')
   .pipe(sass().on('error', sass.logError))
-  .pipe(gulp.dest('./dist/css'))
+  .pipe(gulp.dest('./docs/css'))
   .pipe(browserSync.stream({ match: '**/*.css' }))
 });
 
@@ -72,9 +72,9 @@ gulp.task('default', ['css', 'vendor']);
 
 // Watch task
 gulp.task('watch', ['browserSync'], () => {
-  gulp.watch('./dist/scss/**/{*.scss,_*.scss}', ['css','reload']);
-  gulp.watch("./dist/*.html",['reload']);
-  gulp.watch("./dist/es6/*.js",['reload']);
+  gulp.watch('./docs/scss/**/{*.scss,_*.scss}', ['css','reload']);
+  gulp.watch("./docs/*.html",['reload']);
+  gulp.watch("./docs/es6/*.js",['reload']);
 });
 
 // Dev task

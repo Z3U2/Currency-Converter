@@ -3,7 +3,7 @@ const { join } = require('path');
 
 const app = express();
 const PORT = 8080;
-const DIST_FOLDER = join(process.cwd(),'dist/');
+const DIST_FOLDER = join(process.cwd(),'docs/');
 
 app.get("*.*", express.static(DIST_FOLDER));
 
