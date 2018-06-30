@@ -1,0 +1,49 @@
+body {
+  @include body-font;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include heading-font;
+}
+
+.btn-xl {
+  text-transform: uppercase;
+  padding: 1.5rem 3rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+}
+
+.bg-black {
+  background-color: $black !important;
+}
+
+.rounded-pill {
+  border-radius: 5rem;
+}
+
+.main {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  input {
+    margin-top : 10px;
+    margin-bottom: 10px;
+  }
+  select {
+    margin-top : 10px;
+    margin-bottom: 10px;
+  }
+  .go-btn-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    .go-btn {
+      width: 200px;
+    }
+  }
+}
