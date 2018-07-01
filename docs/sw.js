@@ -1,17 +1,18 @@
-let staticCacheName = 'curr-conv-7';
+let staticCacheName = 'curr-conv-8';
 
 self.addEventListener('install', function (event) {
     console.log("service worker installing")
+    console.log(self.registration.scope)
     event.waitUntil(
         caches.open(staticCacheName).then(function (cache) {
             return cache.addAll([
-                '/',
-                '/es6/app.js',
-                '/css/one-page-wonder.css',
-                '/vendor/bootstrap/css/bootstrap.min.css',
-                '/vendor/bootstrap/js/bootstrap.bundle.min.js',
-                '/vendor/jquery/jquery.min.js',
-                '/vendor/idb/idb.js',
+                self.registration.scope + '',
+                self.registration.scope + 'es6/app.js',
+                self.registration.scope + 'css/one-page-wonder.css',
+                self.registration.scope + 'vendor/bootstrap/css/bootstrap.min.css',
+                self.registration.scope + 'vendor/bootstrap/js/bootstrap.bundle.min.js',
+                self.registration.scope + 'vendor/jquery/jquery.min.js',
+                self.registration.scope + 'vendor/idb/idb.js',
                 'https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900',
                 'https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i',
                 'https://free.currencyconverterapi.com/api/v5/currencies'
