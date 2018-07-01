@@ -1,8 +1,9 @@
+// Cache Name, bump for sw update
 let staticCacheName = 'curr-conv-8';
 
+
+// Installation, caches links
 self.addEventListener('install', function (event) {
-    console.log("service worker installing")
-    console.log(self.registration.scope)
     event.waitUntil(
         caches.open(staticCacheName).then(function (cache) {
             return cache.addAll([
@@ -21,6 +22,7 @@ self.addEventListener('install', function (event) {
     );
 });
 
+// Activation removes old cachess
 self.addEventListener('activate', function (event) {
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
@@ -36,6 +38,7 @@ self.addEventListener('activate', function (event) {
     );
 });
 
+//Intercept all the fetches and serve cache for cached ressources.
 self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request).then(function (response) {

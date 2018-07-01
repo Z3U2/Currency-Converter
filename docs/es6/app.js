@@ -1,23 +1,25 @@
-
-
-
 class MainController {
 
     constructor(container) {
+        this.container = container;
         this.inputCurr = "USD";
         this.outputCurr = "EUR";
-        this.container = container;
+
+
         this.input = this.container.querySelector("#input");
         this.output = this.container.querySelector("#output");
         this.inputSelect = this.container.querySelector("#inputCurr");
         this.outputSelect = this.container.querySelector("#outputCurr");
         this.db = this.openDatabase();
+        
+
         this.getCurrencies();
         this.setRate(this.inputCurr,this.outputCurr);
         this.conversionLogic();
         this.registerServiceWorker();
     }
 
+    //Event Listeners for conversion logic
     conversionLogic() {
         this.inputSelect.addEventListener('change', _ => {
             this.inputCurr = this.inputSelect.value;
@@ -35,6 +37,7 @@ class MainController {
         })
     }
 
+    // Sets rate and puts it in class property
     setRate(inputCurr,outputCurr) {
         this.getRate(inputCurr,outputCurr)
             .then(rate => {
@@ -46,6 +49,7 @@ class MainController {
             })
     }
 
+    // Gets all currencies <= intercepted by SW
     getCurrencies() {
         return fetch('https://free.currencyconverterapi.com/api/v5/currencies',{mode:'cors'})
             .then(res => {
@@ -64,6 +68,10 @@ class MainController {
             .catch(err => console.log(err))
     }
 
+    // Workflow for getting rate
+    // If it's in idb and recent, we use it, else,
+    // We try to fetch it, if the fetch works it's alright
+    // else, we use the idb version if there's any.
     getRate(inputCurr,outputCurr) {
         return this.checkDB(inputCurr,outputCurr)
             .then(res => {
@@ -80,6 +88,7 @@ class MainController {
         
     }
 
+    // Checks if the conversion rate was saved
     checkDB(inputCurr,outputCurr) {
         return this.db.then(db => {
             if (!db) return;
@@ -90,6 +99,7 @@ class MainController {
         })
     }
 
+    // Looks for conversion rates in the API
     fetchRates(inputCurr,outputCurr) {
         let str = `https://free.currencyconverterapi.com/api/v5/convert?q=${inputCurr}_${outputCurr}&compact=ultra`;
         return fetch(str, { mode: 'cors' })
@@ -109,6 +119,7 @@ class MainController {
             .catch(_ => this.checkDB(inputCurr,outputCurr))
     }
 
+    // Saves rate in idb
     saveDB(object) {
         return this.db.then(db => {
             if(!db) return;
@@ -118,12 +129,15 @@ class MainController {
         })
     }
 
+    // Register Service worker
+    // TODO : manage updates.
     registerServiceWorker() {
         if (!navigator.serviceWorker) return;
 
         navigator.serviceWorker.register('sw.js')
     }
 
+    // Promised db connection
     openDatabase() {
         // If the browser doesn't support service worker,
         // we don't care about having a database

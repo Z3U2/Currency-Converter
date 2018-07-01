@@ -75,7 +75,9 @@ gulp.task('watch', ['browserSync'], () => {
   gulp.watch('./docs/scss/**/{*.scss,_*.scss}', ['css','reload']);
   gulp.watch("./docs/*.html",['reload']);
   gulp.watch("./docs/es6/*.js",['reload']);
+  gulp.watch("./docs/*.js", ['reload']);
 });
+
 
 // Dev task
 gulp.task('dev', ['watch', 'start']);
